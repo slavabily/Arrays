@@ -47,7 +47,15 @@ int max_score(int d[], int size) {
 
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    printf("Hello, World!\n");
+    FILE *ifp;
+    int i, sz;
+    int data[10];
+    
+    ifp = fopen("arr", "r");
+    
+    fscanf(ifp, "%d", &sz);
+    
+    printf("%d\n", sz);
+    
     return 0;
 }
