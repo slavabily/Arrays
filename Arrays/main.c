@@ -6,6 +6,8 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 //void read_data(FILE *ptr, int d[], int *size) {
 //    *size = 0;
@@ -47,15 +49,36 @@ int max_value(int d[], int size) {
 
 
 int main(int argc, const char * argv[]) {
-    FILE *ifp;
+    FILE *ifp, *ofp;
+    char str[20];
+    char comment[50];
     int i, sz;
     int data[10];
     
-    ifp = fopen("arr", "r");
+    ifp = fopen("arr.txt", "r");
+    ofp = fopen("answer-hw3.txt", "a");
     
     fscanf(ifp, "%d", &sz);
     
+    sprintf(str, "%d", sz);
+    strcpy(comment, "The number of elements in array is:\t");
+    
+    if ( ofp == NULL )
+    {
+        printf( "Could not open file test.txt" ) ;
+        return 1;
+    }
+    
+    // writing to the file
+    if (str > 0 && comment > 0) {
+        fputs(comment, ofp);
+        fputs(str, ofp) ;
+        fputs("\n", ofp) ;
+    }
+    fclose(ofp);
+     
     printf("%d\n", sz);
+    
     
     for (i = 1; i <= sz; i++) {
         fscanf(ifp, "%d", &data[i]);
