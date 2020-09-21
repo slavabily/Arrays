@@ -9,13 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-//void read_data(FILE *ptr, int d[], int *size) {
-//    *size = 0;
-//    while (fscanf(ptr, "%d", &d[*size]) == 1) {
-//        (*size)++;
-//    }
-//}
-
 void print_data(int d[], int size) {
     int i;
     for (i = 1; i <= size; i++) {
@@ -30,7 +23,7 @@ double average(int d[], int size) {
     int i;
     double avg = 0.0;
     
-    for (i = 0; i <= size; i++) {
+    for (i = 1; i <= size; i++) {
         avg += d[i];
     }
     return avg / size;
@@ -39,51 +32,62 @@ double average(int d[], int size) {
 int max_value(int d[], int size) {
     int i;
     
-    for (i = 0; i <= size; i++) {
-        if (d[0] < d[i]) {
-            d[0] = d[i];
+    for (i = 1; i <= size; i++) {
+        if (d[1] < d[i]) {
+            d[1] = d[i];
         }
     }
-    return d[0];
+    return d[1];
 }
-
 
 int main(int argc, const char * argv[]) {
     FILE *ifp, *ofp;
-    char str[20];
+    char number[20];
     char comment[50];
     int i, sz;
     int data[10];
     
-    ifp = fopen("arr.txt", "r");
-    ofp = fopen("answer-hw3.txt", "a");
+    ifp = fopen("arr", "r");
+    ofp = fopen("answer-hw3", "w");
     
+    // MARK: Reading the first array element
     fscanf(ifp, "%d", &sz);
     
-    sprintf(str, "%d", sz);
+    sprintf(number, "%d", sz);
     strcpy(comment, "The number of elements in array is:\t");
     
     if ( ofp == NULL )
     {
-        printf( "Could not open file test.txt" ) ;
+        printf( "Could not open file answer-hw3" ) ;
         return 1;
     }
     
     // writing to the file
-    if (str > 0 && comment > 0) {
+    if (number > 0 && comment > 0) {
         fputs(comment, ofp);
-        fputs(str, ofp) ;
+        fputs(number, ofp) ;
         fputs("\n", ofp) ;
     }
-    fclose(ofp);
-     
-    printf("%d\n", sz);
+ // printing to the console
+    printf("%s %d\n",comment, sz);
     
-    
+    // MARK: Reading the array itself
     for (i = 1; i <= sz; i++) {
         fscanf(ifp, "%d", &data[i]);
     }
-    
+    // writing to the file
+    strcpy(comment, "The array itself is: \t");
+    if (number > 0 && comment > 0) {
+        fputs(comment, ofp);
+        for (i = 1; i <= sz; i++) {
+            sprintf(number, "%d", data[i]);
+            fputs(number, ofp);
+            fputs("\t", ofp);
+        }
+        fputs("\n", ofp) ;
+    }
+    // printing to the console
+    printf("%s", comment);
     print_data(data, sz);
     
     printf("\n%g\n", average(data, sz));
